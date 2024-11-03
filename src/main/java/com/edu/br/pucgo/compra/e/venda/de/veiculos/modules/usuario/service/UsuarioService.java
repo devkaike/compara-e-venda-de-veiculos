@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,6 +42,12 @@ public class UsuarioService {
 
         return new ServiceResponseDTO(200, "cadastro realizado com sucesso!");
     }
+
+    public ServiceResponseDTO buscarTodos(){
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return new ServiceResponseDTO(200, usuarios);
+    }
+
 
     public ServiceResponseDTO buscarPorEmail(String email){
         Optional<Usuario> usuario =usuarioRepository.findByEmail(email);
