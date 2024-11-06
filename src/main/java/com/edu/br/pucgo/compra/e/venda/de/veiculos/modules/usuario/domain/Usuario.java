@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "usuario")
 @Data
@@ -18,6 +20,19 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private long id;
+
+    private String nome;
+
+    private String telefone;
+
+    private String cpf;
+
+    @Column(name = "conta_criada")
+    private LocalDateTime contaCriada = LocalDateTime.now();
+
+    private String estado;
+
+    private String cidade;
 
     private String email;
 

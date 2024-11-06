@@ -35,6 +35,7 @@ public class LoginService {
 
         var userOptional = user.get();
         var id = userOptional.getId();
+        var nome = userOptional.getNome();
         var now = Instant.now();
         var expiresIn = 3000L;
 
@@ -49,6 +50,6 @@ public class LoginService {
                 .build();
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return new LoginResponse(jwtValue, expiresIn, id);
+        return new LoginResponse(jwtValue, expiresIn, id, nome);
     }
 }
