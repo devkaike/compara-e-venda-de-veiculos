@@ -1,5 +1,6 @@
 package com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.veiculo.domain;
 
+import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.anuncio.domain.Anuncio;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.usuario.domain.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -55,4 +56,7 @@ public class Veiculo {
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
+
+    @OneToOne(mappedBy = "veiculo", cascade = CascadeType.ALL)
+    private Anuncio anuncio;
 }
