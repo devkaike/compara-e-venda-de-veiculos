@@ -59,4 +59,9 @@ public class Veiculo {
 
     @OneToOne(mappedBy = "veiculo", cascade = CascadeType.ALL)
     private Anuncio anuncio;
+
+    private String filename;
+    private String fileUrl;
+    private String contentType;
+
 }
