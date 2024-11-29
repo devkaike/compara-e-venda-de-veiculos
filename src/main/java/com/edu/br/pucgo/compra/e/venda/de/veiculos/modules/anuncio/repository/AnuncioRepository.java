@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface AnuncioRepository extends JpaRepository<Anuncio, Long> {
     List<Anuncio> findByUsuarioVendedor_Id(@Param("id_anuncio") Long id);
+    List<Anuncio> findByVeiculoModeloContainingIgnoreCase(String modelo);
+    List<Anuncio> findByVeiculoModeloAndVeiculoAno(String modelo, int ano);
 }
