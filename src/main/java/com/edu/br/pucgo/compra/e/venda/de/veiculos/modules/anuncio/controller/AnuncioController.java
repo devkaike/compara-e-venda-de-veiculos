@@ -24,5 +24,11 @@ public class AnuncioController {
         var response = anuncioService.listarAnuncio();
         return ResponseEntity.status(response.status()).body(response.message());
     }
+
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<?> listarPorIdUsuario(@PathVariable Long id){
+        var response = anuncioService.listarPeloIdUsuario(id);
+        return ResponseEntity.status(response.status()).body(response.message());
+    }
 }
 

@@ -3,7 +3,6 @@ package com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.veiculo.controller;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.veiculo.domain.Veiculo;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.veiculo.service.VeiculoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +75,30 @@ public class VeiculoController {
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<?> deltarVeiculo(@PathVariable Long id){
         var response = veiculoService.excluir(id);
+        return ResponseEntity.status(response.status()).body(response.message());
+    }
+
+    @GetMapping("/listar/{id}")
+    public ResponseEntity<?> listarPeloId(@PathVariable Long id){
+        var response = veiculoService.listarPorId(id);
+        return ResponseEntity.status(response.status()).body(response.message());
+    }
+
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<?> listarPorIdUser(@PathVariable Long id){
+        var response = veiculoService.listarPeloIdUsuario(id);
+        return ResponseEntity.status(response.status()).body(response.message());
+    }
+
+    @GetMapping("/modelo/{modelo}")
+    public ResponseEntity<?> listarPorModelo(@PathVariable String modelo){
+        var response = veiculoService.listarPeloModelo(modelo);
+        return ResponseEntity.status(response.status()).body(response.message());
+    }
+
+    @GetMapping("/modelo/{modelo}/ano/{ano}")
+    public ResponseEntity<?> listarPorModeloEAno(@PathVariable String modelo, @PathVariable int ano){
+        var response = veiculoService.listarPeloModeloEAno(modelo, ano);
         return ResponseEntity.status(response.status()).body(response.message());
     }
 }

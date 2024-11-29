@@ -1,6 +1,7 @@
 package com.edu.br.pucgo.compra.e.venda.de.veiculos.util.DTOs;
 
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.anuncio.domain.Anuncio;
+import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.domain.Negociacao;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.usuario.domain.Usuario;
 import lombok.*;
 

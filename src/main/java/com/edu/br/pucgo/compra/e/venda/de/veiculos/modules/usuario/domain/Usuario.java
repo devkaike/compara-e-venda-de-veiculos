@@ -4,9 +4,7 @@ import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.anuncio.domain.Anunci
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.login.dto.LoginRequest;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.domain.Negociacao;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.roles.domain.Role;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -51,9 +49,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuarioVendedor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Anuncio> anuncios;
-
-    @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL)
-    private List<Negociacao> negociacaos;
 
     public boolean isLoginCorrect(LoginRequest loginRequest, BCryptPasswordEncoder passwordEncoder){
         return passwordEncoder.matches(loginRequest.senha(), this.Senha);

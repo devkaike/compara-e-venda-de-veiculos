@@ -2,8 +2,6 @@ package com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.service;
 
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.domain.Negociacao;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.repository.NegociacaoRepository;
-import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.veiculo.domain.Veiculo;
-import com.edu.br.pucgo.compra.e.venda.de.veiculos.util.DTOs.NegociacaoDTO;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.util.DTOs.ServiceResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -3,9 +3,9 @@ package com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.controlle
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.domain.Negociacao;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.repository.NegociacaoRepository;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.negociacao.service.NegociacaoService;
-import com.edu.br.pucgo.compra.e.venda.de.veiculos.modules.veiculo.domain.Veiculo;
 import com.edu.br.pucgo.compra.e.venda.de.veiculos.util.DTOs.NegociacaoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ public class NegociacaoController {
     @Autowired
     private NegociacaoRepository negociacaoRepository;
 
-    @PostMapping("/do")
+    @PostMapping(value = "/do")
     public ResponseEntity<?> cadastrar(@RequestBody Negociacao negociacao){
         var response = negociacaoService.cadastrarNegociacao(negociacao);
         return ResponseEntity.status(response.status()).body(response.message());

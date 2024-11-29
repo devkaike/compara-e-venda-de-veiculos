@@ -37,7 +37,7 @@ public class LoginService {
         var id = userOptional.getId();
         var nome = userOptional.getNome();
         var now = Instant.now();
-        var expiresIn = 3000L;
+        var expiresIn = 30L * 24 * 60 * 60 * 1000;;
 
         String scope = user.get().getRole().getNome();
 

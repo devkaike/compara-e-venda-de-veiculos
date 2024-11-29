@@ -17,6 +17,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -95,5 +96,25 @@ public class VeiculoService {
     public ServiceResponseDTO<?> excluir(Long id){
         veiculoRepository.deleteById(id);
         return new ServiceResponseDTO(200, "Veiculo foi excluido.");
+    }
+
+    public  ServiceResponseDTO<?> listarPorId(Long id){
+        Optional<Veiculo> veiculo = veiculoRepository.findById(id);
+        return new ServiceResponseDTO(200, veiculo);
+    }
+
+    public ServiceResponseDTO<?> listarPeloIdUsuario(Long id){
+        List<Veiculo> veiculos = veiculoRepository.findByUsuario_Id(id);
+        return new ServiceResponseDTO(200, veiculos);
+    }
+
+    public ServiceResponseDTO<?> listarPeloModelo(String modelo){
+        List<Veiculo> veiculos = veiculoRepository.findByModelo(modelo);
+        return new ServiceResponseDTO(200, veiculos);
+    }
+
+    public ServiceResponseDTO<?> listarPeloModeloEAno(String modelo, int ano){
+        List<Veiculo> veiculos = veiculoRepository.findByModeloAndAno(modelo, ano);
+        return new ServiceResponseDTO(200, veiculos);
     }
 }

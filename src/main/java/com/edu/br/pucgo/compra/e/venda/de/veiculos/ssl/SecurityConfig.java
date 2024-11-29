@@ -37,25 +37,33 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     private RSAPrivateKey privateKey;
 
+    private static final String[] SWAGGER_WHITELIST = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/webjars/**"
+    };
+
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
-                    corsConfiguration.setAllowedMethods(Arrays.asList("*"));
+                    corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+                    corsConfiguration.setExposedHeaders(Arrays.asList("Authorization"));
+                    corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
                 }))
-                .authorizeHttpRequests(
-                        auth -> auth
-                                .requestMatchers("/login/auth/**").permitAll()
-                                .requestMatchers("/user/criar").permitAll()
-                                .anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                        .requestMatchers("/login/auth/user").permitAll()
+                        .requestMatchers("/user/criar").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(
-                        conf -> conf.jwt(
-                                jwt -> jwt.decoder(jwtDecoder())))
+                .oauth2ResourceServer(conf -> conf.jwt(jwt -> jwt.decoder(jwtDecoder())))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();

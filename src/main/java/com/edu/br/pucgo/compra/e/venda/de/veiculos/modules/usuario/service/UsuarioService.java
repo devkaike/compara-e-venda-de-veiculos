@@ -59,4 +59,9 @@ public class UsuarioService {
         return new ServiceResponseDTO(200, usuario.get());
     }
 
+    public ServiceResponseDTO buscarPeloId(Long id){
+        Optional<Usuario> usuario= usuarioRepository.findById(id);
+        return new ServiceResponseDTO(200, usuario);
+    }
+
 }

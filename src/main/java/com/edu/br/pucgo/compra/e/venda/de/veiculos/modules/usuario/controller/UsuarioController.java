@@ -25,4 +25,10 @@ public class UsuarioController {
         var response = usuarioService.listarUsuario();
         return ResponseEntity.status(response.status()).body(response.message());
     }
+
+    @GetMapping("/listar/{id}")
+    public ResponseEntity<?> listarPorId(@PathVariable Long id){
+        var response = usuarioService.buscarPeloId(id);
+        return ResponseEntity.status(response.status()).body(response.message());
+    }
 }
