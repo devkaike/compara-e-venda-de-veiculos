@@ -46,10 +46,6 @@ public class Usuario {
     @JoinColumn
     private Role role;
 
-    @OneToMany(mappedBy = "usuarioVendedor", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Anuncio> anuncios;
-
     public boolean isLoginCorrect(LoginRequest loginRequest, BCryptPasswordEncoder passwordEncoder){
         return passwordEncoder.matches(loginRequest.senha(), this.Senha);
     }
