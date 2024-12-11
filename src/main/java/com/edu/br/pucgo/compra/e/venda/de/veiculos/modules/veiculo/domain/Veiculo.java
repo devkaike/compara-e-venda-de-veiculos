@@ -57,9 +57,6 @@ public class Veiculo {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "veiculo", cascade = CascadeType.ALL)
-    private Anuncio anuncio;
-
     private String filename;
     private String fileUrl;
     private String contentType;

@@ -49,8 +49,11 @@ public class AnuncioService {
     }
 
     public ServiceResponseDTO<?> excluir(Long id){
+        if (!anuncioRepository.existsById(id)) {
+            return new ServiceResponseDTO<>(404, "Anuncio não encontrado.");
+        }
         anuncioRepository.deleteById(id);
-        return new ServiceResponseDTO(200, "Anuncio foi excluido.");
+        return new ServiceResponseDTO<>(200, "Anuncio foi excluido.");
     }
 
     public Anuncio atualizarParcial(Long id, Map<String, Object> updates) {
