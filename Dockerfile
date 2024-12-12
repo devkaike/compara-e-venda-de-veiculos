@@ -1,4 +1,4 @@
-# Usando uma imagem Maven com Java 21
+# Fase 1: Build usando Maven e Java 21
 FROM maven:3.9.4-eclipse-temurin-21 AS build
 
 # Definir o diretório de trabalho
@@ -12,7 +12,7 @@ RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Criar a imagem final com o JDK 21
+# Fase 2: Criar a imagem final com o JDK 21
 FROM eclipse-temurin:21-jdk-alpine
 
 # Definir o diretório de trabalho e a porta de exposição
@@ -22,5 +22,10 @@ EXPOSE 8080
 # Copiar o JAR compilado para o contêiner final
 COPY --from=build /app/target/compra-e-venda-de-veiculos-0.0.1-SNAPSHOT.jar app.jar
 
+# Copiar arquivos extras, como os relatórios, para o sistema de arquivos do contêiner
+COPY src/main/resources/Relatorio.jasper /app/Relatorio.jasper
+COPY src/main/resources/RelatorioNegociacao.jasper /app/RelatorioNegociacao.jasper
+
 # Iniciar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
+

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,26 +27,22 @@ public class RelatorioController {
     @GetMapping("/relatorio/veiculos")
     public ResponseEntity<byte[]> gerarRelatorioVeiculos(@RequestParam String formato) {
         try {
-            String caminhoRelatorio = Paths.get(
-                    getClass().getClassLoader().getResource("Relatorio.jasper").toURI()
-            ).toString();
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Relatorio.jasper");
+            if (inputStream == null) {
+                throw new FileNotFoundException("Relatório 'Relatorio.jasper' não encontrado no classpath.");
+            }
 
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("Relatório", "Relatórios");
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    caminhoRelatorio,
-                    parametros,
-                    dataSource.getConnection()
-            );
+            JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, dataSource.getConnection());
 
             System.out.println("Formato recebido: " + formato);
 
             ByteArrayOutputStream saida = new ByteArrayOutputStream();
             if ("pdf".equalsIgnoreCase(formato)) {
                 JasperExportManager.exportReportToPdfStream(jasperPrint, saida);
-            }
-             else {
+            } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(("Formato " + formato + " não suportado. Use 'pdf'.").getBytes());
             }
@@ -59,33 +56,30 @@ public class RelatorioController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(("Erro ao gerar o relatório: " + e.getMessage()).getBytes());
         }
     }
 
     @GetMapping("/relatorio/negociacao")
     public ResponseEntity<byte[]> gerarRelatorioNegociacao(@RequestParam String formato) {
         try {
-            String caminhoRelatorio = Paths.get(
-                    getClass().getClassLoader().getResource("RelatorioNegociacao.jasper").toURI()
-            ).toString();
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("RelatorioNegociacao.jasper");
+            if (inputStream == null) {
+                throw new FileNotFoundException("Relatório 'RelatorioNegociacao.jasper' não encontrado no classpath.");
+            }
 
             Map<String, Object> parametros = new HashMap<>();
             parametros.put("Relatório", "Relatórios");
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    caminhoRelatorio,
-                    parametros,
-                    dataSource.getConnection()
-            );
+            JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, dataSource.getConnection());
 
             System.out.println("Formato recebido: " + formato);
 
             ByteArrayOutputStream saida = new ByteArrayOutputStream();
             if ("pdf".equalsIgnoreCase(formato)) {
                 JasperExportManager.exportReportToPdfStream(jasperPrint, saida);
-            }
-            else {
+            } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(("Formato " + formato + " não suportado. Use 'pdf'.").getBytes());
             }
@@ -99,7 +93,8 @@ public class RelatorioController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(("Erro ao gerar o relatório: " + e.getMessage()).getBytes());
         }
     }
 
