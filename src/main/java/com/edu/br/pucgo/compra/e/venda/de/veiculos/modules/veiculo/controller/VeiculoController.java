@@ -41,7 +41,7 @@ public class VeiculoController {
             veiculo.setFileUrl(veiculoService.uploadFile(filename, contentType, content));
             veiculoService.cadastrarVeiculo(veiculo);
 
-            return ResponseEntity.ok().body(veiculo.getFileUrl());
+            return ResponseEntity.ok().body(veiculo);
         } catch (IOException | URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
         }
