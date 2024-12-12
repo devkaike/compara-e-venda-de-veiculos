@@ -15,8 +15,14 @@ RUN mvn clean package -DskipTests
 # Fase 2: Criar a imagem final com o JDK 21
 FROM eclipse-temurin:21-jdk-alpine
 
-# Instalar fontes adicionais no Alpine
-RUN apk add --no-cache ttf-dejavu fontconfig
+# Instalar as fontes Microsoft TrueType
+RUN apk add --no-cache fontconfig ttf-dejavu \
+    && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing msttcorefonts-installer \
+    && update-ms-fonts \
+    && fc-cache -f
+
+# Verificar se a fonte Arial está instalada
+RUN fc-list | grep "Arial"
 
 # Definir o diretório de trabalho e a porta de exposição
 WORKDIR /app
@@ -31,4 +37,5 @@ COPY src/main/resources/RelatorioNegociacao.jasper /app/RelatorioNegociacao.jasp
 
 # Iniciar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
 
