@@ -15,6 +15,9 @@ RUN mvn clean package -DskipTests
 # Fase 2: Criar a imagem final com o JDK 21
 FROM eclipse-temurin:21-jdk-alpine
 
+# Instalar fontes adicionais no Alpine
+RUN apk add --no-cache ttf-dejavu fontconfig
+
 # Definir o diretório de trabalho e a porta de exposição
 WORKDIR /app
 EXPOSE 8080
